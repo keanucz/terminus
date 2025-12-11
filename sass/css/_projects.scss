@@ -1,0 +1,28 @@
+#major-projects {
+    margin-bottom: 0;
+}
+
+.project-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    padding-bottom: 0;
+    margin-inline-start: 0;
+    
+    img {
+        display: inline-block;
+        width: 48px;
+        height: auto;
+        flex-shrink: 0;
+    }
+    
+    h3 {
+        margin: 0;
+        display: inline-block;
+    }
+}
+
+.project-header + * {
+    margin-top: 0;
+}
