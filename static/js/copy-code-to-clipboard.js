@@ -1,15 +1,16 @@
-const codeBlocks = document.querySelectorAll("pre code[data-lang]");
+const code_blocks = document.querySelectorAll("pre code[data-lang]");
 
-for (const codeBlock of codeBlocks) {
+for (const code_block of code_blocks) {
     let content;
-    if (codeBlock.parentElement.hasAttribute("data-linenos")) {
-        content = [...codeBlock.querySelectorAll("tr")]
+    if (code_block.parentElement.hasAttribute("data-linenos")) {
+        content = [...code_block.querySelectorAll("tr")]
             .map((row) => row.querySelector("td:last-child")?.innerText ?? "")
             .join("");
     } else {
-        content = codeBlock.innerText.split("\n").filter(Boolean).join("\n");
+        content = code_block.innerText.split("\n").filter(Boolean).join("\n");
     }
 
+    // Copy to clipboard
     if (navigator.clipboard !== undefined) {
         const copyButton = document.createElement("button");
         copyButton.classList.add("copy-button");
@@ -17,10 +18,13 @@ for (const codeBlock of codeBlocks) {
 
         copyButton.addEventListener("click", () => {
             copyButton.innerText = "Copied!";
+            setTimeout(() => {
+                copyButton.innerText = "Copy";
+            }, 1000);
+
             navigator.clipboard.writeText(content);
-            setTimeout(() => copyButton.innerText = "Copy", 1000);
         });
 
-        codeBlock.prepend(copyButton);
+        code_block.prepend(copyButton);
     }
 }

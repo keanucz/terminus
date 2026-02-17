@@ -12,10 +12,6 @@ class ThemeSwitcher {
       "gruvbox-dark": "🍂 Gruvbox",
       "oled-abyss": "🌑 OLED Abyss",
       "solar-flare": "☀️ Solar Flare",
-      "catppuccin-latte": "🙀 Catppuccin Latte",
-      "catppuccin-frappe": "😸 Catppuccin Frappé",
-      "catppuccin-macchiato": "😻 Catppuccin Macchiato",
-      "catppuccin-mocha": "😼 Catppuccin Mocha",
     };
 
     this.currentTheme = this.getStoredTheme();
@@ -24,7 +20,7 @@ class ThemeSwitcher {
   }
 
   getStoredTheme() {
-    // Priority: localStorage > system preference > terminus
+    // Priority: localStorage > system preference > default
     const stored = localStorage.getItem("theme");
     if (stored && this.themes[stored]) {
       return stored;
@@ -47,8 +43,14 @@ class ThemeSwitcher {
     this.currentTheme = themeName;
     this.originalTheme = themeName; // Track the "real" theme
 
+    // Update selector if it exists
+    const selector = document.querySelector(".theme-selector select");
+    if (selector) {
+      selector.value = themeName;
+    }
+
     // Update meta theme-color for browser chrome
-    this.updateMetaThemeColor();
+    this.updateMetaThemeColor(themeName);
   }
 
   previewTheme(themeName) {
@@ -61,7 +63,7 @@ class ThemeSwitcher {
 
     // Apply preview theme (but don't save to localStorage)
     document.body.setAttribute("data-theme", themeName);
-    this.updateMetaThemeColor();
+    this.updateMetaThemeColor(themeName);
   }
 
   restoreTheme() {
@@ -70,15 +72,25 @@ class ThemeSwitcher {
       this.originalTheme !== document.body.getAttribute("data-theme")
     ) {
       document.body.setAttribute("data-theme", this.originalTheme);
-      this.updateMetaThemeColor();
+      this.updateMetaThemeColor(this.originalTheme);
     }
   }
 
-  updateMetaThemeColor() {
+  updateMetaThemeColor(themeName) {
+    const themeColors = {
+      terminus: "#211f1a",
+      "tokyo-night": "#1a1b26",
+      "solarized-dark": "#002b36",
+      nord: "#2e3440",
+      "one-dark": "#282c34",
+      "gruvbox-dark": "#282828",
+      "oled-abyss": "#000000",
+      "solar-flare": "#ffffff",
+    };
+
     const metaTheme = document.querySelector('meta[name="theme-color"]');
-    const themeColor = window.getComputedStyle(document.body).getPropertyValue('--background-color');
-    if (metaTheme && themeColor) {
-      metaTheme.setAttribute("content", themeColor);
+    if (metaTheme && themeColors[themeName]) {
+      metaTheme.setAttribute("content", themeColors[themeName]);
     }
   }
 
@@ -99,7 +111,7 @@ class ThemeSwitcher {
                     ${Object.entries(this.themes)
         .map(
           ([key, name]) =>
-            `<li><a href="#" class="theme-option ${key === this.currentTheme ? "current" : ""}" data-theme="${key}" role="menuitem">${name}</a></li>`,
+            `<li><a href="#" class="theme-option ${key === this.currentTheme ? "terminus" : ""}" data-theme="${key}" role="menuitem">${name}</a></li>`,
         )
         .join("")}
                 </ul>
