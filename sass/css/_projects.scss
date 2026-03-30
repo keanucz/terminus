@@ -5,21 +5,26 @@
 .project-header {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 6px;
     margin: 0;
     padding-bottom: 0;
     margin-inline-start: 0;
     
     img {
         display: inline-block;
-        width: 48px;
-        height: auto;
+        width: 1.3em;
+        height: 1.3em;
+        max-width: 1.3em;
+        max-height: 1.3em;
+        object-fit: contain;
         flex-shrink: 0;
+        vertical-align: middle;
     }
     
     h3 {
         margin: 0;
         display: inline-block;
+        line-height: 1.2;
     }
 }
 
