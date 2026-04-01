@@ -74,8 +74,14 @@ socials = [
 [extra.content_security_policy]
 enable = true
 allowed_domains = [
-    { directive = "connect-src", domains = ["'self'", "cloudflareinsights.com"] },
-    { directive = "script-src", domains = ["'self'", "static.cloudflareinsights.com"] },
+    { directive = "connect-src", domains = [
+        "'self'",
+        "cloudflareinsights.com",
+    ] },
+    { directive = "script-src", domains = [
+        "'self'",
+        "static.cloudflareinsights.com",
+    ] },
 ]
 
 [extra.responsive_images]
