@@ -150,6 +150,13 @@ div.timeline-year {
   margin: 0;
 }
 
+.timeline-loc-sep {
+  display: block;
+  height: 0;
+  border-top: 1px solid color-mix(in srgb, var(--accent-color) 20%, transparent);
+  margin: 0.35rem 0;
+}
+
 .timeline-win {
   color: gold;
   font-weight: bold;
@@ -157,11 +164,13 @@ div.timeline-year {
 
 .timeline-links {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.75rem;
   margin-top: 0.25rem;
   font-size: calc(var(--font-size) * 0.8);
 
   a {
+    white-space: nowrap;
     color: var(--accent-color);
     text-decoration: none;
     opacity: 0.6;
