@@ -16,7 +16,7 @@
     {%- endif -%}
 
     {#- Allow inline CSS if Zola syntax highlighting is enabled -#}
-    {%- if config.markdown.highlight_code == true -%}
+    {%- if config.markdown.highlighting.theme or config.markdown.highlighting.light_theme -%}
         {%- set style_src = load_data(literal=`{"directive": "style-src-attr", "domains": ["'unsafe-inline'"]}`, format="json") -%}
         {%- set allowed_domains = allowed_domains | concat(with=style_src) -%}
     {%- endif -%}
