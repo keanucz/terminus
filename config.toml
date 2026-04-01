@@ -43,8 +43,13 @@ bottom_footnotes = true
 # When set to "true", support for GitHub-style alerts, a.k.a. callouts or admonitions, is enabled in the Markdown parser.
 github_alerts = true
 
-# Syntax highlighting configuration
 [markdown.highlighting]
+# Whether to use inline hex colours ("inline") or CSS classes ("class").
+# See https://www.getzola.org/documentation/content/syntax-highlighting/ for details.
+style = "inline"
+
+# The theme to use for code highlighting.
+# See https://github.com/getzola/giallo?tab=readme-ov-file#themes for the list of allowed values.
 theme = "monokai"
 
 [extra]
@@ -74,14 +79,10 @@ socials = [
 [extra.content_security_policy]
 enable = true
 allowed_domains = [
-    { directive = "connect-src", domains = [
-        "'self'",
-        "cloudflareinsights.com",
-    ] },
-    { directive = "script-src", domains = [
-        "'self'",
-        "static.cloudflareinsights.com",
-    ] },
+    { directive = "base-uri", domains = ["'self'"] },
+    { directive = "connect-src", domains = ["'self'", "cloudflareinsights.com"] },
+    { directive = "form-action", domains = ["'self'"] },
+    { directive = "script-src", domains = ["'self'", "static.cloudflareinsights.com", "'sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg=='"] },
 ]
 
 [extra.responsive_images]

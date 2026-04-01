@@ -1,14 +1,17 @@
-const code_blocks = document.querySelectorAll("pre code[data-lang]");
+const codeBlocks = document.querySelectorAll("pre.giallo code[data-lang]:not([data-lang='plain'])");
 
-for (const code_block of code_blocks) {
-    let content;
-    if (code_block.parentElement.hasAttribute("data-linenos")) {
-        content = [...code_block.querySelectorAll("tr")]
-            .map((row) => row.querySelector("td:last-child")?.innerText ?? "")
-            .join("");
-    } else {
-        content = code_block.innerText.split("\n").filter(Boolean).join("\n");
-    }
+for (const codeBlock of codeBlocks) {
+    const preBlock = codeBlock.parentElement;
+
+    // Giallo wraps every line in a .giallo-l span, with optional .giallo-ln spans
+    // for line numbers. Extract text from each line span, stripping line numbers.
+    const content = [...codeBlock.querySelectorAll(".giallo-l")]
+        .map((line) => {
+            const clone = line.cloneNode(true);
+            clone.querySelectorAll(".giallo-ln").forEach((ln) => ln.remove());
+            return clone.textContent;
+        })
+        .join("\n");
 
     // Copy to clipboard
     if (navigator.clipboard !== undefined) {
@@ -25,6 +28,6 @@ for (const code_block of code_blocks) {
             navigator.clipboard.writeText(content);
         });
 
-        code_block.prepend(copyButton);
+        preBlock.prepend(copyButton);
     }
 }
